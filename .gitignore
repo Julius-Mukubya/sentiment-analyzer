@@ -1,0 +1,19 @@
+venv/
+__pycache__/
+*.pyc
+
+# Environment variable files — never commit real .env files
+.env
+**/.env
+
+# .env.example files ARE committed (placeholder values only)
+!.env.example
+!**/.env.example
+
+# SQLite database — contains user data, never commit
+*.db
+
+*.egg-info/
+dist/
+build/
+.cache/
