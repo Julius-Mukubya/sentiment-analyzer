@@ -27,7 +27,13 @@ from pathlib import Path
 # uvicorn is launched from.
 sys.path.insert(0, str(Path(__file__).parent))
 
-from database import get_all_feedback, get_summary_stats, init_db, insert_feedback
+from database import (
+    get_all_feedback,
+    get_feedback_by_id,
+    get_summary_stats,
+    init_db,
+    insert_feedback,
+)
 
 load_dotenv()
 
@@ -163,9 +169,7 @@ def submit_feedback(request: FeedbackRequest):
         confidence=confidence,
         name=request.name,
     )
-    all_rows = get_all_feedback()
-    saved = next(r for r in all_rows if r["id"] == row_id)
-    return FeedbackResponse(**saved)
+    return FeedbackResponse(**get_feedback_by_id(row_id))
 
 
 @app.get("/feedback", response_model=List[FeedbackResponse], tags=["Feedback"])

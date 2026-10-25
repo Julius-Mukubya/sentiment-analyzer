@@ -78,6 +78,13 @@ def insert_feedback(
         return cursor.lastrowid
 
 
+def get_feedback_by_id(row_id: int) -> Optional[dict]:
+    """Return a single row as a dict, or None if it does not exist."""
+    with _connect() as conn:
+        row = conn.execute("SELECT * FROM feedback WHERE id = ?", (row_id,)).fetchone()
+    return dict(row) if row else None
+
+
 def get_all_feedback() -> list[dict]:
     """Return all rows as a list of dicts, newest first."""
     with _connect() as conn:
